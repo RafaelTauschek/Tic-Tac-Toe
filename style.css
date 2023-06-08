@@ -92,3 +92,27 @@ table tr:first-child td {
 table tr:last-child td {
   border-bottom-width: 0;
 }
+
+@media (max-width: 840px) {
+  #content {
+    margin-top: 100px;
+  }
+}
+
+@media (max-height: 750px) {
+  #content {
+    margin-top: 50px;
+  }
+}
+
+@media (max-height: 680px) {
+  .currentPlayer {
+    margin-top: 10px;
+  }
+  #content {
+    margin-top: 30px;
+  }
+  .button {
+    margin-top: 20px;
+  }
+}
