@@ -6,7 +6,24 @@ body {
   max-height: 100vh;
 }
 
+.symbol {
+  opacity: 1;
+}
+
+.inactive {
+  opacity: 0.3;
+}
+
+.currentPlayer {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 50px;
+}
+
 h1 {
+  font-size: 48px;
   text-align: center;
 }
 
@@ -14,7 +31,29 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 200px;
+  margin-top: 150px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 24px;
+  border: none;
+  background-color: #00B0EF;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background-color: #26bcf3;
 }
 
 

@@ -8,10 +8,17 @@
     <link rel="stylesheet" href="style.css">
     <title>Tic Tac Toe</title>
 </head>
-<body onload="render()">
+<body onload="init()">
 
     <h1>Tic Tac Toe</h1>
+    <div class="currentPlayer">
+        <div id="cross"></div>
+        <div id="circle"></div>
+    </div>
+
 
     <div id="content"></div>
+
+    <div class="button" onclick="restartGame()"><button>Spiel neu starten</button></div>
 </body>
 </html>

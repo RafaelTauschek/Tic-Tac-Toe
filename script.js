@@ -10,37 +10,21 @@ let fields = [
     null
 ];
 
+let audio_draw = new Audio('audio/draw.mp3');
+let audio_end = new Audio('audio/end.mp3');
+let currentPlayer = 'circle';
 const winCombinations = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontale Kombinationen
     [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertikale Kombinationen
     [0, 4, 8], [2, 4, 6] // Diagonale Kombinationen
 ];
 
+
 function init() {
     render();
+    renderSymbols();
 }
 
-function checkGameOver() {
-    for (const combination of winCombinations) {
-        const [a, b, c] = combination;
-        if (
-            fields[a] !== null &&
-            fields[a] === fields[b] &&
-            fields[b] === fields[c]
-        ) {
-            drawWinningLine(a, b, c);
-            return true; // Das Spiel ist vorbei
-        }
-    }
-
-    // Unentschieden prüfen
-    if (fields.every(field => field !== null)) {
-        // Unentschieden
-        return true; // Das Spiel ist vorbei
-    }
-
-    return false; // Das Spiel ist noch nicht vorbei
-}
 
 function render() {
     const contentDiv = document.getElementById('content');
@@ -68,7 +52,65 @@ function render() {
     }
     tableHTML += '</table>';
     contentDiv.innerHTML = tableHTML;
+    renderSymbols();
 }
+
+
+function renderSymbols() {
+    let crossSymbol = document.getElementById('cross');
+    let circleSymbol = document.getElementById('circle');
+    crossSymbol.innerHTML = generateCrossSVG();
+    circleSymbol.innerHTML = generateCircleSVG();
+
+    if (currentPlayer === 'circle') {
+        crossSymbol.classList.add('inactive');
+        circleSymbol.classList.remove('inactive');
+    } else {
+        crossSymbol.classList.remove('inactive');
+        circleSymbol.classList.add('inactive');
+    }
+}
+
+
+function restartGame() {
+    fields = [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ];
+    currentPlayer = 'circle';
+    render();
+}
+
+
+function checkGameOver() {
+    for (const combination of winCombinations) {
+        const [a, b, c] = combination;
+        if (
+            fields[a] !== null &&
+            fields[a] === fields[b] &&
+            fields[b] === fields[c]
+        ) {
+            drawWinningLine(a, b, c);
+            return true; // Das Spiel ist vorbei
+        }
+    }
+
+    // Unentschieden prüfen
+    if (fields.every(field => field !== null)) {
+        // Unentschieden
+        return true; // Das Spiel ist vorbei
+    }
+
+    return false; // Das Spiel ist noch nicht vorbei
+}
+
 
 function drawWinningLine(a, b, c) {
     const lineColor = '#FFFFFF';
@@ -112,8 +154,6 @@ function drawWinningLine(a, b, c) {
 }
 
 
-let currentPlayer = 'circle';
-
 function handleCellClick(index) {
     if (fields[index] === null) {
         fields[index] = currentPlayer;
@@ -122,11 +162,14 @@ function handleCellClick(index) {
         cellElement.innerHTML = symbolHTML;
         cellElement.removeAttribute('onclick');
         currentPlayer = currentPlayer === 'circle' ? 'cross' : 'circle';
+        audio_draw.play();
 
         if (checkGameOver()) {
             console.log('Spiel ist vorbei');
+            audio_end.play();
         }
     }
+    renderSymbols();
 }
 
 
@@ -147,6 +190,7 @@ function generateCircleSVG() {
     return svgCode;
 }
 
+
 function generateCrossSVG() {
     const crossColor = '#FFC000';
     const width = 70;
@@ -163,5 +207,4 @@ function generateCrossSVG() {
 
     return svgCode;
 }
-
 
